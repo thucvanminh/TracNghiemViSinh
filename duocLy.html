@@ -238,15 +238,15 @@
                 padding: 20px;
                 margin: 10px;
             }
-            
+
             .quiz-title {
                 font-size: 20px;
             }
-            
+
             .question {
                 font-size: 16px;
             }
-            
+
             .option {
                 padding: 12px 15px;
                 font-size: 14px;
@@ -632,7 +632,7 @@
     "B": "Đường hô hấp",
     "C": "Đường tiết niệu",
     "D": "Da",
-    "answer": "A"
+    "answer": "C"
   },
   {
     "question": "Thường gặp tác dụng phụ nào khi sử dụng lâu dài antacid nhôm:",
@@ -1102,10 +1102,10 @@
             const question = questions[currentQuestion];
             document.getElementById('question').textContent = question.question;
             document.getElementById('questionCounter').textContent = `Câu ${currentQuestion + 1} / ${questions.length}`;
-            
+
             const optionsContainer = document.getElementById('options');
             optionsContainer.innerHTML = '';
-            
+
             ['A', 'B', 'C', 'D'].forEach(letter => {
                 const option = document.createElement('div');
                 option.className = 'option';
@@ -1117,7 +1117,7 @@
             // Khôi phục câu trả lời đã chọn trước đó (nếu có)
             if (userAnswers[currentQuestion]) {
                 const savedAnswer = userAnswers[currentQuestion];
-                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt => 
+                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt =>
                     opt.querySelector('.option-letter').textContent.replace('.', '') === savedAnswer
                 );
                 if (savedOption) {
@@ -1138,7 +1138,7 @@
 
         function selectOption(letter, element) {
             if (answered) return;
-            
+
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             selectedAnswer = letter;
@@ -1148,11 +1148,11 @@
 
         function checkAnswer() {
             if (!selectedAnswer || answered) return;
-            
+
             answered = true;
             const correctAnswer = questions[currentQuestion].answer;
             const isCorrect = selectedAnswer === correctAnswer;
-            
+
             document.querySelectorAll('.option').forEach(opt => {
                 const letter = opt.querySelector('.option-letter').textContent.replace('.', '');
                 if (letter === correctAnswer) {
@@ -1212,7 +1212,7 @@
         function updateNavigationButtons() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
-            
+
             prevBtn.disabled = currentQuestion === 0;
             nextBtn.disabled = currentQuestion === questions.length - 1;
         }

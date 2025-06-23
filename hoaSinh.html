@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        .option.wrong {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .option-letter {
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 25px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn:disabled:hover {
+            background: #f8f9fa;
+            border-color: #e9ecef;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .quiz-complete {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .final-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            @media (max-width: 480px) {
+            .quiz-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .quiz-title {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .nav-btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1 class="quiz-title">📝 Quiz Trắc Nghiệm</h1>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question-counter" id="questionCounter">Câu 1 / 4</div>
+        </div>
+
+        <div id="quizContent">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+            <div class="navigation-buttons">
+                <button class="nav-btn prev-btn" id="prevBtn" onclick="previousQuestion()">← Câu Trước</button>
+                <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()">Câu Tiếp →</button>
+            </div>
+            <button class="submit-btn" id="submitBtn" onclick="checkAnswer()">Trả Lời</button>
+        </div>
+
+        <div id="quizComplete" class="quiz-complete" style="display: none;">
+            <div class="final-score" id="finalScore"></div>
+            <h2>🎉 Hoàn thành quiz!</h2>
+            <p>Cảm ơn vợ đã tham gia!</p>
+            <button class="restart-btn" onclick="restartQuiz()">Làm Lại</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Câu 1: Lipid là những hợp chất có chứa các nguyên tố chính nào sau đây?",
+                options: [
+                    "A) Carbon, hydro, nitơ",
+                    "B) Hydro, oxy, nitơ",
+                    "C) Carbon, oxy, nitơ",
+                    "D) Carbon, hydro, oxy"
+                ],
+                answer: 3
+            },
+            {
+                question: "Câu 2: Chọn các nguyên tố chính cấu tạo nên cơ thể người?",
+                options: [
+                    "A) Carbon, hydro, oxy, nitơ, calci",
+                    "B) Carbon, hydro, oxy, nitơ, kali",
+                    "C) Carbon, hydro, oxy, sắt, calci",
+                    "D) Carbon, hydro, clo, nitơ, calci"
+                ],
+                answer: 0
+            },
+            {
+                question: "Câu 3: Hóa sinh là môn khoa học tổng hợp của các môn học nào sau đây?",
+                options: [
+                    "A) Sinh học và hóa học hữu cơ",
+                    "B) Sinh học và hóa học vô cơ",
+                    "C) Sinh học và hóa học phân tích",
+                    "D) Sinh học và hóa học định lượng"
+                ],
+                answer: 0
+            },
+            {
+                "question": "Câu 4: Hầu hết dược phẩm đều được chuyển hóa trong cơ thể người bởi các phản ứng được xúc tác bằng chất nào sau đây?",
+                "options": [
+                    "A) Enzym",
+                    "B) Vitamin",
+                    "C) Chất vô cơ",
+                    "D) Chất hóa học"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 5: Chọn tên tác giả đề ra thuyết Ổ khóa và chìa khóa để giải thích tính đặc hiệu tuyệt đối của enzym đối với cơ chất?",
+                "options": [
+                    "A) E.Fischer",
+                    "B) F.Sanger",
+                    "C) P.Pauling",
+                    "D) G.Cori"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 6: Quá trình đồng hóa diễn ra trong cơ thể người được xúc tác bằng chất nào sau đây?",
+                "options": [
+                    "A) Enzym đặc hiệu",
+                    "B) Cơ chất đặc hiệu",
+                    "C) Vitamin",
+                    "D) Các chất hoạt hóa"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 7: Khi thủy phân cắt liên kết phosphate giàu năng lượng sẽ cho khoảng năng lượng bao nhiêu calo?",
+                "options": [
+                    "A) 4000-8000 calo",
+                    "B) 8000-16000 calo",
+                    "C) 16000-24000 calo",
+                    "D) 24000-32000 calo"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 8: Chu trình Krebs xảy ra trong đâu của các tế bào nhân thật?",
+                "options": [
+                    "A) Ty thể",
+                    "B) Lạp thể",
+                    "C) Bào tương",
+                    "D) Mạng lưới nội chất"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 9: Một vòng của chu trình Krebs sẽ cung cấp năng lượng dự trữ tương đương bao nhiêu ATP?",
+                "options": [
+                    "A) 8 ATP",
+                    "B) 10 ATP",
+                    "C) 12 ATP",
+                    "D) 14 ATP"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 10: Hô hấp tế bào là quá trình như thế nào?",
+                "options": [
+                    "A) Hấp thu CO2, thải oxy",
+                    "B) Hấp thu oxy, thải CO2",
+                    "C) Hấp thu CO2 và oxy",
+                    "D) Thải CO2 và oxy"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 11: Quá trình biến các phân tử hữu cơ có nguồn gốc khác nhau thành những phân tử hữu cơ riêng của cơ thể gọi là gì?",
+                "options": [
+                    "A) Đồng hóa",
+                    "B) Dị hóa",
+                    "C) Trao đổi chất",
+                    "D) Hô hấp tế bào"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 12: Sự phân giải các chất hữu cơ thành sản phẩm cuối cùng, đồng thời đào thải các chất cặn bã ra ngoài gọi là quá trình gì?",
+                "options": [
+                    "A) Đồng hóa",
+                    "B) Dị hóa",
+                    "C) Trao đổi chất",
+                    "D) Hô hấp tế bào"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 13: Quá trình nào là đặc trưng của sự sống sinh vật?",
+                "options": [
+                    "A) Chuyển hóa chất",
+                    "B) Hấp thu",
+                    "C) Tiêu hóa",
+                    "D) Đào thải"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 14: Quá trình đồng hóa lần lượt trải qua các giai đoạn nào sau đây?",
+                "options": [
+                    "A) Tiêu hóa --> hấp thu --> tổng hợp",
+                    "B) Hấp thu --> tiêu hóa --> tổng hợp",
+                    "C) Tổng hợp --> tiêu hóa --> hấp thu",
+                    "D) Tổng hợp --> hấp thu --> tiêu hóa"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 15: Sự hô hấp tế bào gồm các quá trình nào sau đây?",
+                "options": [
+                    "A) Tạo CO2 vận chuyển hydro tới oxy tạo nước",
+                    "B) Tạo CO3 vận chuyển hydro tới oxy tạo nước",
+                    "C) Tạo N2 vận chuyển hydro tới oxy tạo nước",
+                    "D) Tạo NH3 vận chuyển hydro tới oxy tạo nước"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 16: Chọn chất có liên kết phosphat giàu năng lượng nhất trong cơ thể?",
+                "options": [
+                    "A) ATP",
+                    "B) ADP",
+                    "C) AMP",
+                    "D) H3PO4"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 17: Đối với cơ thể người không thay đổi trong lượng, quá trình đồng hóa và dị hóa diễn ra như thế nào?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 18: Đối với cơ thể người đang lớn, quá trình đồng hóa và dị hóa diễn ra như thế nào?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 19: So sánh quá trình đồng hóa và dị hóa khi cơ thể người đang phục hồi sau bệnh?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 20: So sánh quá trình đồng hóa và dị hóa khi cơ thể người đang đói?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 21: So sánh quá trình đồng hóa và dị hóa khi cơ thể người về già?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 22: Đối với cơ thể người đang sút cân, quá trình đồng hóa và dị hóa diễn ra như thế nào?",
+                "options": [
+                    "A) Đồng hóa = Dị hóa",
+                    "B) Đồng hóa > Dị hóa",
+                    "C) Đồng hóa < Dị hóa",
+                    "D) Đồng hóa ≥ Dị hóa"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 23: Khi thủy phân cắt liên kết ATP (Adenosin Triphosphat) trong cơ thể người sẽ cho mức năng lượng bao nhiêu calo?",
+                "options": [
+                    "A) 12 000 calo",
+                    "B) 10 000 calo",
+                    "C) 8 000 calo",
+                    "D) 6 000 calo"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 24: Khi thủy phân hoàn toàn tinh bột sẽ tạo ra chất nào sau đây?",
+                "options": [
+                    "A) Galactose",
+                    "B) Fructose",
+                    "C) Saccarose",
+                    "D) Glucose"
+                ],
+                "answer": 3
+            },
+            {
+                "question": "Câu 25: Tinh bột thuộc chất nào sau đây?",
+                "options": [
+                    "A) Monosaccarid",
+                    "B) Oligosaccarid",
+                    "C) Polysaccarid thuần",
+                    "D) Polysaccarid tạp"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 26: Vai trò chính của glucid là gì?",
+                "options": [
+                    "A) Tạo năng, tạo hình",
+                    "B) Tạo năng, cung cấp chất dinh dưỡng",
+                    "C) Tạo hình, tạo khung tế bào",
+                    "D) Cung cấp chất dinh dưỡng, tạo hình"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 27: Chọn monosaccarid hay gặp nhất?",
+                "options": [
+                    "A) Triose",
+                    "B) Pentose",
+                    "C) Hexose",
+                    "D) Tetrose"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 28: Trong điều kiện hiếu khí, oxy hóa hoàn toàn 1 phân tử glucose tự do theo chu trình Hexose diphosphat sẽ sinh ra bao nhiêu ATP?",
+                "options": [
+                    "A) 12 ATP",
+                    "B) 20 ATP",
+                    "C) 38 ATP",
+                    "D) 45 ATP"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 29: Chọn chất điều khiển chính các quá trình chuyển hóa glucid?",
+                "options": [
+                    "A) Hormon",
+                    "B) Enzym",
+                    "C) Lipid",
+                    "D) Protid"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 30: Chọn chất cung cấp năng lượng chủ yếu cho cơ thể người?",
+                "options": [
+                    "A) Protid",
+                    "B) Glucid",
+                    "C) Lipid",
+                    "D) Vitamin"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 31: Chọn hormon làm hạ glucose máu?",
+                "options": [
+                    "A) Insulin",
+                    "B) Glucagon",
+                    "C) Adrenalin",
+                    "D) Thyroxin"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 32: Quá trình tiêu hóa glucid xảy ra mạnh và hoàn toàn ở vị trí nào của đường tiêu hóa?",
+                "options": [
+                    "A) Ruột non",
+                    "B) Dạ dày",
+                    "C) Ruột già",
+                    "D) Tá tràng"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 33: Chọn dạng glucid dự trữ của người và động vật?",
+                "options": [
+                    "A) Glycogen",
+                    "B) Cellulose",
+                    "C) Glucosepolysaccarid",
+                    "D) Glucose"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 34: Chọn chất cung cấp năng lượng cho cơ thể sinh vật nhiều nhất?",
+                "options": [
+                    "A) Lipid",
+                    "B) Glucid",
+                    "C) Protid",
+                    "D) Sorbitol"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 35: Thoái hoái cholesterol ở gan sẽ tạo ra chất nào sau đây?",
+                "options": [
+                    "A) Testosterol",
+                    "B) Acid mật",
+                    "C) Kích thích tố",
+                    "D) Progesterol"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 36: Lipid cung cấp năng lượng gấp bao nhiêu lần so với glucid?",
+                "options": ["A) 2", "B) 3", "C) 4", "D) 5"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 37: Trong máu, lipid ở dưới dạng nào sau đây?",
+                "options": [
+                    "A) Phức lipo-protein",
+                    "B) Lipid tự do",
+                    "C) Phức lipid-glucid",
+                    "D) Kết hợp với huyết cầu"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 38: Thoái hoái cholesterol ở tinh hoàn sẽ tạo ra chất nào sau đây?",
+                "options": ["A) Testosterol", "B) Acid mật", "C) Kích thích tố", "D) Progesterol"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 39: Thoái hoái cholesterol ở buồng trứng sẽ tạo ra chất nào sau đây?",
+                "options": ["A) Testosterol", "B) Acid mật", "C) Kích thích tố", "D) Progesterol"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 40: Chọn lipo-protein có kích thước lớn nhất và hàm lượng triglycerid cao?",
+                "options": [
+                    "A) Chylomycron",
+                    "B) Lipo-protein tỷ trọng thấp",
+                    "C) Lipo-protein tỷ trọng trung gian",
+                    "D) Lipo-protein tỷ trọng cao"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 41: Cholesterol nào sau đây được coi là cholesterol xấu?",
+                "options": [
+                    "A) Chylomycron",
+                    "B) Lipo-protein tỷ trọng thấp",
+                    "C) Lipo-protein tỷ trọng trung gian",
+                    "D) Lipo-protein tỷ trọng cao"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Câu 42: Cholesterol trong chất nào sau đây được coi là cholesterol tốt?",
+                "options": [
+                    "A) Chylomycron",
+                    "B) Lipo-protein tỷ trọng thấp",
+                    "C) Lipo-protein tỷ trọng trung gian",
+                    "D) Lipo-protein tỷ trọng cao"
+                ],
+                "answer": 3
+            },
+            {
+                "question": "Câu 43: Chất nào sau đây trong cơ thể người giữ vai trò chính giúp hòa tan các vitamin tan trong dầu?",
+                "options": ["A) Lipid", "B) Glucid", "C) Protid", "D) Enzym"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 44: Chất nào sau đây trong cơ thể người giữ vai trò chính cách nhiệt, giúp cơ thể chống rét?",
+                "options": ["A) Lipid", "B) Glucid", "C) Protid", "D) Enzym"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 45: Chất nào sau đây trong cơ thể người có vai trò bảo vệ, tránh các sự va chạm từ bên ngoài?",
+                "options": ["A) Lipid", "B) Glucid", "C) Protid", "D) Enzym"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 46: Sterol quan trọng nhất trong cơ thể người là gì?",
+                "options": ["A) Sterid", "B) Cholesterol", "C) Alcol vòng", "D) Alcol"],
+                "answer": 1
+            },
+            {
+                "question": "Câu 47: Vai trò của cholesterol là tham gia cấu tạo gì cho cơ thể?",
+                "options": ["A) Nhân tế bào", "B) Màng tế bào", "C) Ty thể", "D) Ty lạp thể"],
+                "answer": 1
+            },
+            {
+                "question": "Câu 48: Một phân tử Hemoglobin kết hợp và vận chuyển được bao nhiêu phân tử O2?",
+                "options": ["A) 1", "B) 2", "C) 3", "D) 4"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 49: Cơ quan tạo ra nhiều hem nhất?",
+                "options": [
+                    "A) Gan, thận",
+                    "B) Tủy xương, thận",
+                    "C) Gan, tủy xương",
+                    "D) Tủy xương, lách"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "Câu 50: Khi có rối loạn chuyển hóa hemoglobin và bilirubin sẽ gây triệu chứng nào sau đây?",
+                "options": [
+                    "A) Vàng da",
+                    "B) Xuất huyết",
+                    "C) Loãng xương",
+                    "D) Chậm phát triển chiều cao"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 51: Chọn protid có vai trò tham gia các quá trình bảo vệ cơ thể?",
+                "options": ["A) Insulin", "B) Lipase", "C) Các kháng thể", "D) Hemoglobin"],
+                "answer": 2
+            },
+            {
+                "question": "Câu 52: Vasopressin có tác dụng gì?",
+                "options": [
+                    "A) Tăng huyết áp, giảm tiểu tiện",
+                    "B) Hạ huyết áp, giảm tiểu tiện",
+                    "C) Tăng huyết áp, tăng tiểu tiện",
+                    "D) Hạ huyết áp, tăng tiểu tiện"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 53: Cấu tạo của protid gồm 4 nguyên tố chính nào sau đây?",
+                "options": [
+                    "A) H, C, O, N",
+                    "B) H, C, O, S",
+                    "C) Fe, C, O, N",
+                    "D) H, C, S, Fe"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Câu 54: Enzym thường bị mất hoạt tính ở khoảng nhiệt độ nào sau đây?",
+                "options": ["A) 30-40oC", "B) 40-50oC", "C) 50-60oC", "D) 60-70oC"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 55: Trong phản ứng có sự xúc tác của enzym, khi tăng nhiệt độ lên 10oC, tốc độ phản ứng tăng khoảng bao nhiêu lần?",
+                "options": ["A) 02 lần", "B) 03 lần", "C) 04 lần", "D) 05 lần"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 56: Chọn nhiệt độ thích hợp cho hoạt động của đa số enzym?",
+                "options": ["A) 30oC", "B) 35oC", "C) 40oC", "D) 45oC"],
+                "answer": 2
+            },
+            {
+                "question": "Câu 57: Chọn pH thích hợp cho hoạt động của đa số enzym?",
+                "options": ["A) Acid", "B) Trung tính", "C) Kiềm", "D) Trung tính và kiềm"],
+                "answer": 1
+            },
+            {
+                "question": "Câu 58: Theo phân loại quốc tế, enzym được chia làm bao nhiêu nhóm?",
+                "options": ["A) 06 nhóm", "B) 02 nhóm", "C) 04 nhóm", "D) 08 nhóm"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 59: Những enzym cùng xúc tác một phản ứng hóa học gần giống nhau được gọi là gì?",
+                "options": ["A) Multienzym", "B) Proenzym", "C) Zymogen", "D) Isozym"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 60: Enzym là chất xúc tác sinh vật học có bản chất là gì?",
+                "options": ["A) Protid", "B) Glucid", "C) Lipid", "D) Lipoprotein"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 61: Phương pháp thường dùng để tinh chế enzyme là gì?",
+                "options": ["A) Kết tủa, sắc ký", "B) Điện di, lọc", "C) Lọc, sắc ký", "D) Ly tâm, lọc"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 62: Vitamin nào sau đây là chất chống oxy hóa tự nhiên quan trọng nhất?",
+                "options": ["A) Vitamin A", "B) Vitamin E", "C) Vitamin D", "D) Vitamin B1"],
+                "answer": 1
+            },
+            {
+                "question": "Câu 63: Thiếu vitamin nào sau đây thì cơ quan sinh sản và quá trình tạo phôi có thể bị ảnh hưởng?",
+                "options": ["A) Vitamin A", "B) Vitamin E", "C) Vitamin D", "D) Vitamin B1"],
+                "answer": 1
+            },
+            {
+                "question": "Câu 64: Chọn vitamin có tác dụng làm tăng hấp thu calci và phospho ở ruột?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin B1"],
+                "answer": 2
+            },
+            {
+                "question": "Câu 65: Thiếu vitamin nào sau đây sẽ gây bệnh còi xương ở trẻ em?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 2
+            },
+            {
+                "question": "Câu 66: Thiếu vitamin nào sau đây thì biểu mô dễ bị xơ chai và bị vi khuẩn xâm lấn?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 67: Chọn vitamin có chức năng duy trì tính nhạy cảm của mắt đối với việc thu nhận ánh sáng?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 68: Bệnh quáng gà là biểu hiện sớm của sự thiếu vitamin nào sau đây?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 3
+            },
+            {
+                "question": "Câu 69: Chọn vitamin tác động lên sự tổng hợp kháng thể, làm tăng sức đề kháng của cơ thể?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 70: Vitamin nào sau đây có chức năng tổng hợp thành phần mô liên kết (collagen) giúp lành sẹo, liền xương?",
+                "options": ["A) Vitamin C", "B) Vitamin E", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 0
+            },
+            {
+                "question": "Câu 71: Vitamin nào sau đây có chức năng chống oxy hóa, chống gốc tự do?",
+                "options": ["A) Vitamin C", "B) Vitamin B1", "C) Vitamin D", "D) Vitamin A"],
+                "answer": 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let selectedAnswer = '';
+        let score = 0;
+        let answered = false;
+        let userAnswers = {}; // Lưu trữ câu trả lời của người dùng
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question').textContent = question.question;
+            document.getElementById('questionCounter').textContent = `Câu ${currentQuestion + 1} / ${questions.length}`;
+
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            ['A', 'B', 'C', 'D'].forEach(letter => {
+                const option = document.createElement('div');
+                option.className = 'option';
+                option.onclick = () => selectOption(letter, option);
+                option.innerHTML = `<span class="option-letter">${letter}.</span>${question[letter]}`;
+                optionsContainer.appendChild(option);
+            });
+
+            // Khôi phục câu trả lời đã chọn trước đó (nếu có)
+            if (userAnswers[currentQuestion]) {
+                const savedAnswer = userAnswers[currentQuestion];
+                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt =>
+                    opt.querySelector('.option-letter').textContent.replace('.', '') === savedAnswer
+                );
+                if (savedOption) {
+                    savedOption.classList.add('selected');
+                    selectedAnswer = savedAnswer;
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            } else {
+                selectedAnswer = '';
+                document.getElementById('submitBtn').disabled = true;
+            }
+
+            updateProgress();
+            updateNavigationButtons();
+            resetFeedback();
+            answered = false;
+        }
+
+        function selectOption(letter, element) {
+            if (answered) return;
+
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedAnswer = letter;
+            userAnswers[currentQuestion] = letter; // Lưu câu trả lời
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function checkAnswer() {
+            if (!selectedAnswer || answered) return;
+
+            answered = true;
+            const correctAnswer = questions[currentQuestion].answer;
+            const isCorrect = selectedAnswer === correctAnswer;
+
+            document.querySelectorAll('.option').forEach(opt => {
+                const letter = opt.querySelector('.option-letter').textContent.replace('.', '');
+                if (letter === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (letter === selectedAnswer && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            if (isCorrect) {
+                feedback.textContent = '💕 Vợ anh giỏi quá!';
+                feedback.className = 'feedback correct show';
+                score++;
+            } else {
+                feedback.textContent = '😊 Sai ùi, vợ cố lên nhé!';
+                feedback.className = 'feedback wrong show';
+            }
+
+            document.getElementById('submitBtn').textContent = currentQuestion < questions.length - 1 ? 'Câu Tiếp Theo' : 'Hoàn Thành';
+            document.getElementById('submitBtn').onclick = goToNextQuestion;
+        }
+
+        function goToNextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                setTimeout(() => {
+                    loadQuestion();
+                    document.getElementById('submitBtn').textContent = 'Trả Lời';
+                    document.getElementById('submitBtn').onclick = checkAnswer;
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    showResults();
+                }, 1000);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+                document.getElementById('submitBtn').textContent = 'Trả Lời';
+                document.getElementById('submitBtn').onclick = checkAnswer;
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+                document.getElementById('submitBtn').textContent = 'Trả Lời';
+                document.getElementById('submitBtn').onclick = checkAnswer;
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.disabled = currentQuestion === questions.length - 1;
+        }
+
+        function showResults() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizComplete').style.display = 'block';
+            document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = '';
+            answered = false;
+            userAnswers = {}; // Reset câu trả lời đã lưu
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizComplete').style.display = 'none';
+            loadQuestion();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function resetFeedback() {
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback';
+            feedback.textContent = '';
+        }
+
+        // Load first question when page loads
+        loadQuestion();
+    </script>
+</body>
+</html>

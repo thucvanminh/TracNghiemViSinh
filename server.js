@@ -21,6 +21,17 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/hoa-sinh', (req, res) => {
+    console.log('Root route accessed');
+    const filePath = path.join(__dirname, 'hoaSinh.html');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.log('Error serving root file:', err);
+            res.status(500).send('Error loading page');
+        }
+    });
+});
+
 app.get('/duoc-ly', (req, res) => {
     console.log('Duoc-ly route accessed');
     const filePath = path.join(__dirname, 'duocLy.html');
