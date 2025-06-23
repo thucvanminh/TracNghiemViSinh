@@ -1,17 +1,19 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
 
-// Phục vụ các file tĩnh từ thư mục hiện tại
+// Use environment port or fallback to 3000
+const PORT = process.env.PORT || 5001;
+
+// Serve static files from current directory
 app.use(express.static(__dirname));
 
-// Route chính để phục vụ file HTML
+// Main route to serve HTML file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'monGiDo269Cau.html'));
 });
 
-// Khởi động server
-app.listen(port, () => {
-    console.log(`Server đang chạy tại http://localhost:${port}`);
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
