@@ -7,9 +7,6 @@ const app = express();
 const PORT = 5001;
 
 
-// Serve static files from current directory
-app.use(express.static(__dirname));
-
 // Main route to serve HTML file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'monGiDo269Cau.html'));
@@ -17,6 +14,9 @@ app.get('/', (req, res) => {
 app.get('/duoc-ly', (req, res) => {
     res.sendFile(path.join(__dirname, 'duocLy.html'));
 });
+
+// Serve static files from current directory
+app.use(express.static(__dirname));
 
 // Start server
 app.listen(PORT, () => {
