@@ -12,6 +12,9 @@ app.use(express.static(__dirname));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'monGiDo269Cau.html'));
 });
+app.get('/duoc-ly', (req,res) => {
+    res.sendFile(path.join(__dirname, 'duocLy.html'));
+});
 
 // Start server
 app.listen(PORT, () => {
