@@ -3,7 +3,9 @@ const path = require('path');
 const app = express();
 
 // Use environment port or fallback to 3000
-const PORT = "https://tracnghiemvisinh.onrender.com";
+// const PORT = "https://tracnghiemvisinh.onrender.com";
+const PORT = 5001;
+
 
 // Serve static files from current directory
 app.use(express.static(__dirname));
