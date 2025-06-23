@@ -1,8 +1,13 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+import job from './cron.js';
 const app = express();
-
+// Port to run the server
+job.start(); // Start the cron job
 const PORT = 5001;
 
 // Kiểm tra file tồn tại
@@ -11,7 +16,7 @@ console.log('monGiDo269Cau.html exists:', fs.existsSync(path.join(__dirname, 'mo
 console.log('duocLy.html exists:', fs.existsSync(path.join(__dirname, 'duocLy.html')));
 
 app.get('/', (req, res) => {
-    console.log('Root route accessed');
+    console.log('Vi sinh route accessed');
     const filePath = path.join(__dirname, 'monGiDo269Cau.html');
     res.sendFile(filePath, (err) => {
         if (err) {
@@ -22,7 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/hoa-sinh', (req, res) => {
-    console.log('Root route accessed');
+    console.log('Hoa Sinh route accessed');
     const filePath = path.join(__dirname, 'hoaSinh.html');
     res.sendFile(filePath, (err) => {
         if (err) {
