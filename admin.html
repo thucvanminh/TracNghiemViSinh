@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thống kê người truy cập</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .stats-container {
+      margin: 20px;
+    }
+    .summary {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="stats-container">
+  <h2>Thống kê truy cập</h2>
+  <div class="summary">
+    <p>Tổng số lượt truy cập: <span id="totalVisits">0</span></p>
+    <p>Số IP duy nhất: <span id="uniqueIPs">0</span></p>
+  </div>
+
+  <h3>Chi tiết các lượt truy cập</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Thời gian</th>
+      <th>IP</th>
+      <th>Vị trí</th>
+      <th>Thiết bị</th>
+      <th>Hệ điều hành</th>
+      <th>Trình duyệt</th>
+      <th>Trang truy cập</th>
+    </tr>
+    </thead>
+    <tbody id="visitsTable">
+    </tbody>
+  </table>
+
+  <h3>Thống kê theo đường dẫn</h3>
+  <ul id="pathStats"></ul>
+</div>
+
+<script>
+  async function loadStats() {
+    try {
+      const response = await fetch('/api/stats');
+      const data = await response.json();
+
+      document.getElementById('totalVisits').textContent = data.tongLuotTruyCap;
+      document.getElementById('uniqueIPs').textContent = data.soIPDuyNhat;
+
+      const tableBody = document.getElementById('visitsTable');
+      tableBody.innerHTML = data.danhSachTruyCap.map(visit => `
+                    <tr>
+                        <td>${visit.thoiGian}</td>
+                        <td>${visit.ip}</td>
+                        <td>${formatLocation(visit.viTri)}</td>
+                        <td>${visit.thietBi.loaiThietBi} ${visit.thietBi.hangSanXuat} ${visit.thietBi.model}</td>
+                        <td>${visit.thietBi.heDieuHanh}</td>
+                        <td>${visit.thietBi.trinhDuyet}</td>
+                        <td>${visit.trangTruyCap}</td>
+                    </tr>
+                `).join('');
+
+      const pathStats = document.getElementById('pathStats');
+      pathStats.innerHTML = Object.entries(data.thongKeDuongDan)
+              .map(([path, count]) => `<li>${path}: ${count} lượt truy cập</li>`)
+              .join('');
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  }
+
+  function formatLocation(location) {
+    if (location === 'Unknown') return 'Không xác định';
+    return `${location.city || ''}, ${location.country || ''}`;
+  }
+
+  // Load stats when page loads
+  loadStats();
+  // Refresh every 5 minutes
+  setInterval(loadStats, 300000);
+</script>
+</body>
+</html>

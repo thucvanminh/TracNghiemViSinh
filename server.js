@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import geoip from 'geoip-lite';
+import UAParser from 'ua-parser-js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,6 +14,8 @@ const app = express();
 // Port to run the server
 job.start(); // Start the cron job
 app.use((req, res, next) => {
+    const parser = new UAParser(req.headers['user-agent']);
+    const userAgentInfo = parser.getResult();
     const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const geo = geoip.lookup(ip);
 
@@ -24,9 +27,17 @@ app.use((req, res, next) => {
             region: geo.region,
             city: geo.city,
             timezone: geo.timezone,
-            ll: geo.ll // latitude and longitude
+            ll: geo.ll
         } : 'Unknown',
-        userAgent: req.headers['user-agent'],
+        thietBi: {
+            loaiThietBi: userAgentInfo.device.type || 'unknown',
+            hangSanXuat: userAgentInfo.device.vendor || 'unknown',
+            model: userAgentInfo.device.model || 'unknown',
+            heDieuHanh: `${userAgentInfo.os.name || 'unknown'} ${userAgentInfo.os.version || ''}`,
+            trinhDuyet: `${userAgentInfo.browser.name || 'unknown'} ${userAgentInfo.browser.version || ''}`,
+        },
+        ngonNgu: req.headers['accept-language'] || 'unknown',
+        manHinh: req.headers['sec-ch-ua-platform'] || 'unknown',
         path: req.path,
         referer: req.headers.referer || 'Direct'
     };
@@ -41,7 +52,6 @@ app.use((req, res, next) => {
 
     next();
 });
-
 
 const PORT = 5001;
 
@@ -87,30 +97,42 @@ app.get('/duoc-ly', (req, res) => {
     });
 });
 
-// Add this new route to your server
-app.get('/admin/stats', (req, res) => {
+app.get('/admin/secret', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+// API endpoint for stats
+app.get('/api/stats', (req, res) => {
     fs.readFile(path.join(__dirname, 'visitors.log'), 'utf8', (err, data) => {
         if (err) {
-            res.status(500).send('Error reading stats');
+            res.status(500).json({ error: 'Error reading stats' });
             return;
         }
 
         const visits = data.trim().split('\n').map(line => JSON.parse(line));
+
         const stats = {
-            totalVisits: visits.length,
-            uniqueIPs: new Set(visits.map(v => v.ip)).size,
-            pathCounts: {},
-            browsers: {}
+            tongLuotTruyCap: visits.length,
+            soIPDuyNhat: new Set(visits.map(v => v.ip)).size,
+            danhSachTruyCap: visits.map(visit => ({
+                thoiGian: new Date(visit.timestamp).toLocaleString('vi-VN'),
+                ip: visit.ip,
+                viTri: visit.location,
+                thietBi: visit.thietBi,
+                trangTruyCap: visit.path
+            })),
+            thongKeDuongDan: {}
         };
 
         visits.forEach(visit => {
-            stats.pathCounts[visit.path] = (stats.pathCounts[visit.path] || 0) + 1;
-            stats.browsers[visit.userAgent] = (stats.browsers[visit.userAgent] || 0) + 1;
+            stats.thongKeDuongDan[visit.path] =
+                (stats.thongKeDuongDan[visit.path] || 0) + 1;
         });
 
         res.json(stats);
     });
 });
+
 
 // Serve static files
 app.use(express.static(__dirname));
