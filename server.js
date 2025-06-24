@@ -53,7 +53,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const PORT = 5001;
+
 
 // Kiểm tra file tồn tại
 console.log('Checking files:');
@@ -132,6 +132,7 @@ app.get('/api/stats', (req, res) => {
         res.json(stats);
     });
 });
+const PORT = process.env.PORT || 5001;
 
 
 // Serve static files
