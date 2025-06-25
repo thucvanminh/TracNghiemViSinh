@@ -238,15 +238,15 @@
                 padding: 20px;
                 margin: 10px;
             }
-            
+
             .quiz-title {
                 font-size: 20px;
             }
-            
+
             .question {
                 font-size: 16px;
             }
-            
+
             .option {
                 padding: 12px 15px;
                 font-size: 14px;
@@ -1062,7 +1062,7 @@
     "B": "Người trưởng thành.",
     "C": "Trẻ em.",
     "D": "Thiếu niên.",
-    "answer": "A"
+    "answer": "C"
   },
   {
     "id": 87,
@@ -1305,7 +1305,7 @@
     "B": "Giun đũa.",
     "C": "Giun tóc.",
     "D": "Giun kim.",
-    "answer": "A"
+    "answer": "C"
   },
   {
     "id": 114,
@@ -2070,7 +2070,7 @@
     "B": "Nhiệt độ của môi trường bên ngoài.",
     "C": "Độ ẩm của không khí.",
     "D": "Bệnh nhân đã được điều trị hay chưa.",
-    "answer": "A"
+    "answer": "B"
   },
   {
     "id": 199,
@@ -2178,7 +2178,7 @@
     "B": "Trên môi trường nuôi cấy thích hợp.",
     "C": "Điều kiện khô hanh.",
     "D": "Nhiệt độ cao.",
-    "answer": "B"
+    "answer": "A"
   },
   {
     "id": 211,
@@ -2295,7 +2295,7 @@
     "B": "Streptolysin S.",
     "C": "Streptolysin K.",
     "D": "Streptokinase.",
-    "answer": "D"
+    "answer": "A"
   },
   {
     "id": 224,
@@ -2358,7 +2358,7 @@
     "B": "Ruột già.",
     "C": "Túi mật.",
     "D": "Hạch lympho.",
-    "answer": "C"
+    "answer": "D"
   },
   {
     "id": 231,
@@ -2439,7 +2439,7 @@
     "B": "Hiếu khí.",
     "C": "Bắt màu đỏ khi nhuộm Gram.",
     "D": "Phát triển chậm.",
-    "answer": "A"
+    "answer": "Cs"
   },
   {
     "id": 240,
@@ -2642,10 +2642,10 @@
             const question = questions[currentQuestion];
             document.getElementById('question').textContent = question.question;
             document.getElementById('questionCounter').textContent = `Câu ${currentQuestion + 1} / ${questions.length}`;
-            
+
             const optionsContainer = document.getElementById('options');
             optionsContainer.innerHTML = '';
-            
+
             ['A', 'B', 'C', 'D'].forEach(letter => {
                 const option = document.createElement('div');
                 option.className = 'option';
@@ -2657,7 +2657,7 @@
             // Khôi phục câu trả lời đã chọn trước đó (nếu có)
             if (userAnswers[currentQuestion]) {
                 const savedAnswer = userAnswers[currentQuestion];
-                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt => 
+                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt =>
                     opt.querySelector('.option-letter').textContent.replace('.', '') === savedAnswer
                 );
                 if (savedOption) {
@@ -2678,7 +2678,7 @@
 
         function selectOption(letter, element) {
             if (answered) return;
-            
+
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             selectedAnswer = letter;
@@ -2688,11 +2688,11 @@
 
         function checkAnswer() {
             if (!selectedAnswer || answered) return;
-            
+
             answered = true;
             const correctAnswer = questions[currentQuestion].answer;
             const isCorrect = selectedAnswer === correctAnswer;
-            
+
             document.querySelectorAll('.option').forEach(opt => {
                 const letter = opt.querySelector('.option-letter').textContent.replace('.', '');
                 if (letter === correctAnswer) {
@@ -2752,7 +2752,7 @@
         function updateNavigationButtons() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
-            
+
             prevBtn.disabled = currentQuestion === 0;
             nextBtn.disabled = currentQuestion === questions.length - 1;
         }

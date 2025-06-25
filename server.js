@@ -97,6 +97,17 @@ app.get('/duoc-ly', (req, res) => {
     });
 });
 
+app.get('/kiem-soat-nhiem-khuan', (req, res) => {
+    console.log('kiem-soat-nhiem-khuan route accessed');
+    const filePath = path.join(__dirname, 'kiemSoatNhiemKhuan.html');
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.log('Error serving root file:', err);
+            res.status(500).send('Error loading page');
+        }
+    });
+});
+
 app.get('/admin/secret', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
