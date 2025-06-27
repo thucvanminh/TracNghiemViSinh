@@ -353,6 +353,7 @@
             selectedAnswer = letter;
             userAnswers[currentQuestion] = letter; // Lưu câu trả lời
             document.getElementById('submitBtn').disabled = false;
+            playSound('chooseSound');
         }
 
         function checkAnswer() {
@@ -375,10 +376,12 @@
             if (isCorrect) {
                 feedback.textContent = '💕 Vợ anh giỏi quá!';
                 feedback.className = 'feedback correct show';
+                playSound('correctSound');
                 score++;
             } else {
                 feedback.textContent = '😊 Sai ùi, vợ cố lên nhé!';
                 feedback.className = 'feedback wrong show';
+                playSound('failSound');
             }
 
             document.getElementById('submitBtn').textContent = currentQuestion < questions.length - 1 ? 'Câu Tiếp Theo' : 'Hoàn Thành';
@@ -453,9 +456,19 @@
             feedback.className = 'feedback';
             feedback.textContent = '';
         }
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0; // Reset sound to start
+                sound.play();
+            }
+        }
 
         // Load first question when page loads
         loadQuestion();
     </script>
+    <audio id="chooseSound" src="soundEffect/ChooseSound.mp3"></audio>
+    <audio id="correctSound" src="soundEffect/CorrectSound.mp3"></audio>
+    <audio id="failSound" src="soundEffect/FailSound.mp3"></audio>
 </body>
 </html>
