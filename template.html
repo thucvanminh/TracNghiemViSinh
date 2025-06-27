@@ -289,17 +289,29 @@
     </div>
 
     <script>
-        const questions = [];
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+        // const questions = [];
+        function getSubjectFromPath() {
+            const path = window.location.pathname;
+            if (path === '/hoa-sinh') return 'hoaSinh';
+            if (path === '/duoc-ly') return 'duocLy';
+            if (path === '/kiem-soat-nhiem-khuan') return 'kiemSoatNhiemKhuan';
+            if(path === '/vi-sinh') return 'viSinh';
+            return 'viSinh'; // default for '/'
         }
 
-        // Shuffle questions on page load
-        shuffle(questions);
+        function loadQuestions(subject, callback) {
+            const script = document.createElement('script');
+            script.src = `questionFiles/${subject}.js`;
+            script.onload = callback;
+            document.head.appendChild(script);
+        }
+
+        const subject = getSubjectFromPath();
+        loadQuestions(subject, () => {
+            shuffle(questions);
+            loadQuestion();
+        });
+
 
         let currentQuestion = 0;
         let selectedAnswer = '';
@@ -464,8 +476,20 @@
             }
         }
 
+
+
         // Load first question when page loads
-        loadQuestion();
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Shuffle questions on page load
+        shuffle(questions);
+
+        // loadQuestion();
     </script>
     <audio id="chooseSound" src="soundEffect/ChooseSound.mp3"></audio>
     <audio id="correctSound" src="soundEffect/CorrectSound.mp3"></audio>
