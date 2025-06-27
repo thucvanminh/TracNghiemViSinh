@@ -21,7 +21,7 @@
             padding: 20px;
         }
 
-        .quiz-container {
+        .container {
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -30,6 +30,139 @@
             width: 100%;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Timer Setup Screen */
+        .timer-setup {
+            text-align: center;
+        }
+
+        .timer-setup h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .timer-setup p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .time-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .time-option {
+            background: #f8f9fa;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .time-option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .time-option.selected {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .time-option .time-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .time-option .time-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .custom-time {
+            margin: 20px 0;
+        }
+
+        .custom-time input {
+            width: 80px;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+
+        .start-quiz-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .start-quiz-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .start-quiz-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer-display.warning {
+            background: rgba(255, 193, 7, 0.95);
+            color: #856404;
+            animation: pulse 1s infinite;
+        }
+
+        .timer-display.danger {
+            background: rgba(220, 53, 69, 0.95);
+            color: white;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            display: none;
         }
 
         .quiz-header {
@@ -175,11 +308,6 @@
             transform: none;
         }
 
-        .nav-btn:disabled:hover {
-            background: #f8f9fa;
-            border-color: #e9ecef;
-        }
-
         .feedback {
             text-align: center;
             padding: 20px;
@@ -212,6 +340,7 @@
         .quiz-complete {
             text-align: center;
             padding: 40px 20px;
+            display: none;
         }
 
         .final-score {
@@ -219,6 +348,15 @@
             font-weight: bold;
             color: #667eea;
             margin-bottom: 20px;
+        }
+
+        .time-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #666;
         }
 
         .restart-btn {
@@ -233,10 +371,22 @@
             margin-top: 20px;
         }
 
-            @media (max-width: 480px) {
-            .quiz-container {
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
                 padding: 20px;
                 margin: 10px;
+            }
+
+            .timer-display {
+                top: 10px;
+                right: 10px;
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+
+            .time-options {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .quiz-title {
@@ -251,16 +401,61 @@
                 padding: 12px 15px;
                 font-size: 14px;
             }
-
-            .nav-btn {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
+<div class="container">
+    <!-- Timer Setup Screen -->
+    <div class="timer-setup" id="timerSetup">
+        <h1>⏰ Chọn Thời Gian Làm Bài</h1>
+        <p>Hãy chọn thời gian phù hợp để làm bài quiz</p>
+
+        <div class="time-options">
+            <div class="time-option" data-minutes="5">
+                <div class="time-value">5</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+            <div class="time-option" data-minutes="10">
+                <div class="time-value">10</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+            <div class="time-option" data-minutes="15">
+                <div class="time-value">15</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+            <div class="time-option" data-minutes="20">
+                <div class="time-value">20</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+            <div class="time-option" data-minutes="30">
+                <div class="time-value">30</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+            <div class="time-option" data-minutes="60">
+                <div class="time-value">60</div>
+                <div class="time-label">PHÚT</div>
+            </div>
+        </div>
+
+        <div class="custom-time">
+            <label for="customMinutes">Hoặc nhập thời gian tùy chỉnh:</label><br>
+            <input type="number" id="customMinutes" placeholder="0" min="1" max="180">
+            <span>phút</span>
+        </div>
+
+        <button class="start-quiz-btn" id="startQuizBtn" onclick="startQuiz()">
+            🚀 Bắt Đầu Quiz
+        </button>
+    </div>
+
+    <!-- Timer Display -->
+    <div class="timer-display" id="timerDisplay" style="display: none;">
+        <span id="timeLeft">00:00</span>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container" id="quizContainer">
         <div class="quiz-header">
             <h1 class="quiz-title">📝 Quiz Trắc Nghiệm</h1>
             <div class="progress-bar">
@@ -279,220 +474,405 @@
             </div>
             <button class="submit-btn" id="submitBtn" onclick="checkAnswer()">Trả Lời</button>
         </div>
-
-        <div id="quizComplete" class="quiz-complete" style="display: none;">
-            <div class="final-score" id="finalScore"></div>
-            <h2>🎉 Hoàn thành quiz!</h2>
-            <p>Cảm ơn vợ đã tham gia!</p>
-            <button class="restart-btn" onclick="restartQuiz()">Làm Lại</button>
-        </div>
     </div>
 
-    <script>
-        // const questions = [];
-        function getSubjectFromPath() {
-            const path = window.location.pathname;
-            if (path === '/hoa-sinh') return 'hoaSinh';
-            if (path === '/duoc-ly') return 'duocLy';
-            if (path === '/kiem-soat-nhiem-khuan') return 'kiemSoatNhiemKhuan';
-            if(path === '/vi-sinh') return 'viSinh';
-            return 'viSinh'; // default for '/'
-        }
+    <!-- Quiz Complete -->
+    <div id="quizComplete" class="quiz-complete">
+        <div class="final-score" id="finalScore"></div>
+        <h2 id="completionTitle">🎉 Hoàn thành quiz!</h2>
+        <div class="time-info" id="timeInfo"></div>
+        <p>Cảm ơn vợ đã tham gia!</p>
+        <button class="restart-btn" onclick="restartQuiz()">Làm Lại</button>
+    </div>
+</div>
 
-        function loadQuestions(subject, callback) {
-            const script = document.createElement('script');
-            script.src = `questionFiles/${subject}.js`;
-            script.onload = callback;
-            document.head.appendChild(script);
-        }
+<script>
+    // Questions will be loaded from external files
+    let questions = [];
 
+    // Load questions based on current path
+    function getSubjectFromPath() {
+        const path = window.location.pathname;
+        if (path === '/hoa-sinh') return 'hoaSinh';
+        if (path === '/duoc-ly') return 'duocLy';
+        if (path === '/kiem-soat-nhiem-khuan') return 'kiemSoatNhiemKhuan';
+        if(path === '/vi-sinh') return 'viSinh';
+        return 'viSinh'; // default for '/'
+    }
+
+    function loadQuestions(subject, callback) {
+        const script = document.createElement('script');
+        script.src = `questionFiles/${subject}.js`;
+        script.onload = callback;
+        script.onerror = () => {
+            console.error('Failed to load questions for subject:', subject);
+            // Fallback questions if file fails to load
+            questions = [
+                {
+                    question: "Không thể tải câu hỏi. Đây là câu hỏi mẫu.",
+                    A: "Tùy chọn A",
+                    B: "Tùy chọn B",
+                    C: "Tùy chọn C",
+                    D: "Tùy chọn D",
+                    answer: "A"
+                }
+            ];
+            callback();
+        };
+        console.log(`Loading questions for subject: ${subject}`);
+        document.head.appendChild(script);
+    }
+
+    // Timer variables
+    let selectedTime = 0;
+    let timeLeft = 0;
+    let timerInterval = null;
+    let startTime = null;
+
+    // Quiz variables
+    let currentQuestion = 0;
+    let selectedAnswer = '';
+    let score = 0;
+    let answered = false;
+    let userAnswers = {};
+    let quizEnded = false;
+
+    // Timer Setup
+    document.querySelectorAll('.time-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedTime = parseInt(this.dataset.minutes);
+            document.getElementById('customMinutes').value = '';
+            updateStartButton();
+        });
+    });
+
+    document.getElementById('customMinutes').addEventListener('input', function() {
+        const customTime = parseInt(this.value);
+        if (customTime > 0) {
+            document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
+            selectedTime = customTime;
+        } else {
+            selectedTime = 0;
+        }
+        updateStartButton();
+    });
+
+    function updateStartButton() {
+        const startBtn = document.getElementById('startQuizBtn');
+        startBtn.disabled = selectedTime <= 0;
+    }
+
+
+    function startQuiz() {
+        if (selectedTime <= 0) return;
+
+        // Tắt nút bắt đầu để tránh click nhiều lần
+        document.getElementById('startQuizBtn').disabled = true;
+        document.getElementById('startQuizBtn').textContent = 'Đang tải câu hỏi...';
+
+        // Lấy môn học từ đường dẫn
         const subject = getSubjectFromPath();
+
+        // Tải câu hỏi, và chỉ bắt đầu quiz trong callback (sau khi tải xong)
         loadQuestions(subject, () => {
+            // KIỂM TRA QUAN TRỌNG: Đảm bảo câu hỏi đã được tải thành công
+            if (!questions || questions.length === 0) {
+                alert(`Lỗi: Không thể tải được bộ câu hỏi cho môn "${subject}". Vui lòng kiểm tra lại file questionFiles/${subject}.js và đường dẫn.`);
+                // Reset lại nút bấm
+                document.getElementById('startQuizBtn').disabled = false;
+                document.getElementById('startQuizBtn').textContent = '🚀 Bắt Đầu Quiz';
+                return; // Dừng lại nếu không có câu hỏi
+            }
+
+            // Trộn ngẫu nhiên các câu hỏi
             shuffle(questions);
+
+            // Ẩn màn hình cài đặt, hiện màn hình quiz
+            document.getElementById('timerSetup').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('timerDisplay').style.display = 'block';
+
+            // Cập nhật tổng số câu hỏi
+            updateQuestionCounter();
+
+            // Khởi tạo và bắt đầu đồng hồ đếm ngược
+            timeLeft = selectedTime * 60; // Chuyển sang giây
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // Tải câu hỏi đầu tiên
             loadQuestion();
         });
+    }
 
 
-        let currentQuestion = 0;
-        let selectedAnswer = '';
-        let score = 0;
-        let answered = false;
-        let userAnswers = {}; // Lưu trữ câu trả lời của người dùng
-
-        function loadQuestion() {
-            const question = questions[currentQuestion];
-            document.getElementById('question').textContent = question.question;
-            document.getElementById('questionCounter').textContent = `Câu ${currentQuestion + 1} / ${questions.length}`;
-
-            const optionsContainer = document.getElementById('options');
-            optionsContainer.innerHTML = '';
-
-            ['A', 'B', 'C', 'D'].forEach(letter => {
-                const option = document.createElement('div');
-                option.className = 'option';
-                option.onclick = () => selectOption(letter, option);
-                option.innerHTML = `<span class="option-letter">${letter}.</span>${question[letter]}`;
-                optionsContainer.appendChild(option);
-            });
-
-            // Khôi phục câu trả lời đã chọn trước đó (nếu có)
-            if (userAnswers[currentQuestion]) {
-                const savedAnswer = userAnswers[currentQuestion];
-                const savedOption = Array.from(document.querySelectorAll('.option')).find(opt =>
-                    opt.querySelector('.option-letter').textContent.replace('.', '') === savedAnswer
-                );
-                if (savedOption) {
-                    savedOption.classList.add('selected');
-                    selectedAnswer = savedAnswer;
-                    document.getElementById('submitBtn').disabled = false;
-                }
-            } else {
-                selectedAnswer = '';
-                document.getElementById('submitBtn').disabled = true;
-            }
-
-            updateProgress();
-            updateNavigationButtons();
-            resetFeedback();
-            answered = false;
+    function updateTimer() {
+        if (timeLeft <= 0) {
+            endQuizByTime();
+            return;
         }
 
-        function selectOption(letter, element) {
-            if (answered) return;
+        timeLeft--;
 
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedAnswer = letter;
-            userAnswers[currentQuestion] = letter; // Lưu câu trả lời
-            document.getElementById('submitBtn').disabled = false;
-            playSound('chooseSound');
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        document.getElementById('timeLeft').textContent = timeString;
+
+        // Change timer color based on remaining time
+        const timerDisplay = document.getElementById('timerDisplay');
+        const percentage = timeLeft / (selectedTime * 60);
+
+        timerDisplay.classList.remove('warning', 'danger');
+
+        if (percentage <= 0.1) { // Last 10%
+            timerDisplay.classList.add('danger');
+        } else if (percentage <= 0.25) { // Last 25%
+            timerDisplay.classList.add('warning');
         }
+    }
 
-        function checkAnswer() {
-            if (!selectedAnswer || answered) return;
+    function endQuizByTime() {
+        clearInterval(timerInterval);
+        quizEnded = true;
 
-            answered = true;
+        // Calculate final score including current question if answered
+        let finalScore = score;
+        if (selectedAnswer && !answered) {
             const correctAnswer = questions[currentQuestion].answer;
-            const isCorrect = selectedAnswer === correctAnswer;
-
-            document.querySelectorAll('.option').forEach(opt => {
-                const letter = opt.querySelector('.option-letter').textContent.replace('.', '');
-                if (letter === correctAnswer) {
-                    opt.classList.add('correct');
-                } else if (letter === selectedAnswer && !isCorrect) {
-                    opt.classList.add('wrong');
-                }
-            });
-
-            const feedback = document.getElementById('feedback');
-            if (isCorrect) {
-                feedback.textContent = '💕 Vợ anh giỏi quá!';
-                feedback.className = 'feedback correct show';
-                playSound('correctSound');
-                score++;
-            } else {
-                feedback.textContent = '😊 Sai ùi, vợ cố lên nhé!';
-                feedback.className = 'feedback wrong show';
-                playSound('failSound');
-            }
-
-            document.getElementById('submitBtn').textContent = currentQuestion < questions.length - 1 ? 'Câu Tiếp Theo' : 'Hoàn Thành';
-            document.getElementById('submitBtn').onclick = goToNextQuestion;
-        }
-
-        function goToNextQuestion() {
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                setTimeout(() => {
-                    loadQuestion();
-                    document.getElementById('submitBtn').textContent = 'Trả Lời';
-                    document.getElementById('submitBtn').onclick = checkAnswer;
-                }, 1000);
-            } else {
-                setTimeout(() => {
-                    showResults();
-                }, 1000);
+            if (selectedAnswer === correctAnswer) {
+                finalScore++;
             }
         }
 
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                loadQuestion();
-                document.getElementById('submitBtn').textContent = 'Trả Lời';
-                document.getElementById('submitBtn').onclick = checkAnswer;
+        showResults(true, finalScore);
+    }
+
+    function stopTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+    }
+
+    // Quiz Functions
+    function loadQuestion() {
+        if (quizEnded) return;
+
+        const question = questions[currentQuestion];
+        document.getElementById('question').textContent = question.question;
+        updateQuestionCounter();
+
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+
+        ['A', 'B', 'C', 'D'].forEach(letter => {
+            const option = document.createElement('div');
+            option.className = 'option';
+            option.onclick = () => selectOption(letter, option);
+            option.innerHTML = `<span class="option-letter">${letter}.</span>${question[letter]}`;
+            optionsContainer.appendChild(option);
+        });
+
+        // Restore previous answer if exists
+        if (userAnswers[currentQuestion]) {
+            const savedAnswer = userAnswers[currentQuestion];
+            const savedOption = Array.from(document.querySelectorAll('.option')).find(opt =>
+                opt.querySelector('.option-letter').textContent.replace('.', '') === savedAnswer
+            );
+            if (savedOption) {
+                savedOption.classList.add('selected');
+                selectedAnswer = savedAnswer;
+                document.getElementById('submitBtn').disabled = false;
             }
-        }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                loadQuestion();
-                document.getElementById('submitBtn').textContent = 'Trả Lời';
-                document.getElementById('submitBtn').onclick = checkAnswer;
-            }
-        }
-
-        function updateNavigationButtons() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            prevBtn.disabled = currentQuestion === 0;
-            nextBtn.disabled = currentQuestion === questions.length - 1;
-        }
-
-        function showResults() {
-            document.getElementById('quizContent').style.display = 'none';
-            document.getElementById('quizComplete').style.display = 'block';
-            document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
-        }
-
-        function restartQuiz() {
-            currentQuestion = 0;
-            score = 0;
+        } else {
             selectedAnswer = '';
-            answered = false;
-            userAnswers = {}; // Reset câu trả lời đã lưu
-            document.getElementById('quizContent').style.display = 'block';
-            document.getElementById('quizComplete').style.display = 'none';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        updateProgress();
+        updateNavigationButtons();
+        resetFeedback();
+        answered = false;
+    }
+
+    function selectOption(letter, element) {
+        if (answered || quizEnded) return;
+
+        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedAnswer = letter;
+        userAnswers[currentQuestion] = letter;
+        document.getElementById('submitBtn').disabled = false;
+        playSound('chooseSound');
+    }
+
+    function checkAnswer() {
+        if (!selectedAnswer || answered || quizEnded) return;
+
+        answered = true;
+        const correctAnswer = questions[currentQuestion].answer;
+        const isCorrect = selectedAnswer === correctAnswer;
+
+        document.querySelectorAll('.option').forEach(opt => {
+            const letter = opt.querySelector('.option-letter').textContent.replace('.', '');
+            if (letter === correctAnswer) {
+                opt.classList.add('correct');
+            } else if (letter === selectedAnswer && !isCorrect) {
+                opt.classList.add('wrong');
+            }
+        });
+
+        const feedback = document.getElementById('feedback');
+        if (isCorrect) {
+            feedback.textContent = '💕 Vợ anh giỏi quá!';
+            feedback.className = 'feedback correct show';
+            playSound('correctSound');
+            score++;
+        } else {
+            feedback.textContent = '😊 Sai ùi, vợ cố lên nhé!';
+            feedback.className = 'feedback wrong show';
+            playSound('failSound');
+        }
+
+        document.getElementById('submitBtn').textContent = currentQuestion < questions.length - 1 ? 'Câu Tiếp Theo' : 'Hoàn Thành';
+        document.getElementById('submitBtn').onclick = goToNextQuestion;
+    }
+
+    function goToNextQuestion() {
+        if (quizEnded) return;
+
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            setTimeout(() => {
+                loadQuestion();
+                document.getElementById('submitBtn').textContent = 'Trả Lời';
+                document.getElementById('submitBtn').onclick = checkAnswer;
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                stopTimer();
+                showResults(false, score);
+            }, 1000);
+        }
+    }
+
+    function nextQuestion() {
+        if (currentQuestion < questions.length - 1 && !quizEnded) {
+            currentQuestion++;
             loadQuestion();
+            document.getElementById('submitBtn').textContent = 'Trả Lời';
+            document.getElementById('submitBtn').onclick = checkAnswer;
+        }
+    }
+
+    function previousQuestion() {
+        if (currentQuestion > 0 && !quizEnded) {
+            currentQuestion--;
+            loadQuestion();
+            document.getElementById('submitBtn').textContent = 'Trả Lời';
+            document.getElementById('submitBtn').onclick = checkAnswer;
+        }
+    }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        prevBtn.disabled = currentQuestion === 0 || quizEnded;
+        nextBtn.disabled = currentQuestion === questions.length - 1 || quizEnded;
+    }
+
+    function showResults(timeUp = false, finalScore = score) {
+        document.getElementById('quizContainer').style.display = 'none';
+        document.getElementById('quizComplete').style.display = 'block';
+        document.getElementById('timerDisplay').style.display = 'none';
+
+        document.getElementById('finalScore').textContent = `${finalScore}/${questions.length}`;
+
+        if (timeUp) {
+            document.getElementById('completionTitle').textContent = '⏰ Hết thời gian!';
+        } else {
+            document.getElementById('completionTitle').textContent = '🎉 Hoàn thành quiz!';
         }
 
-        function updateProgress() {
-            const progress = ((currentQuestion) / questions.length) * 100;
-            document.getElementById('progress').style.width = progress + '%';
+        // Calculate time used
+        const endTime = new Date();
+        const timeUsed = Math.floor((endTime - startTime) / 1000);
+        const minutesUsed = Math.floor(timeUsed / 60);
+        const secondsUsed = timeUsed % 60;
+
+        const timeInfo = document.getElementById('timeInfo');
+        timeInfo.innerHTML = `
+                <strong>Thông tin thời gian:</strong><br>
+                Thời gian đã sử dụng: ${minutesUsed}:${secondsUsed.toString().padStart(2, '0')}<br>
+                Thời gian được phép: ${selectedTime} phút<br>
+                ${timeUp ? 'Kết thúc do hết thời gian' : 'Hoàn thành trước thời hạn'}
+            `;
+    }
+
+    function restartQuiz() {
+        // Reset all variables
+        currentQuestion = 0;
+        score = 0;
+        selectedAnswer = '';
+        answered = false;
+        userAnswers = {};
+        quizEnded = false;
+        selectedTime = 0;
+
+        // Reset UI
+        document.getElementById('quizComplete').style.display = 'none';
+        document.getElementById('quizContainer').style.display = 'none';
+        document.getElementById('timerDisplay').style.display = 'none';
+        document.getElementById('timerSetup').style.display = 'block';
+
+        // Reset selections
+        document.querySelectorAll('.time-option').forEach(opt => opt.classList.remove('selected'));
+        document.getElementById('customMinutes').value = '';
+        updateStartButton();
+
+        // Stop any running timer
+        stopTimer();
+    }
+
+    function updateProgress() {
+        const progress = (currentQuestion / questions.length) * 100;
+        document.getElementById('progress').style.width = progress + '%';
+    }
+
+    function updateQuestionCounter() {
+        document.getElementById('questionCounter').textContent = `Câu ${currentQuestion + 1} / ${questions.length}`;
+    }
+
+    function resetFeedback() {
+        const feedback = document.getElementById('feedback');
+        feedback.className = 'feedback';
+        feedback.textContent = '';
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
-
-        function resetFeedback() {
-            const feedback = document.getElementById('feedback');
-            feedback.className = 'feedback';
-            feedback.textContent = '';
+    }
+    function playSound(soundId) {
+        const sound = document.getElementById(soundId);
+        if (sound) {
+            sound.currentTime = 0; // Reset sound to start
+            sound.play();
         }
-        function playSound(soundId) {
-            const sound = document.getElementById(soundId);
-            if (sound) {
-                sound.currentTime = 0; // Reset sound to start
-                sound.play();
-            }
-        }
-
-
-
-        // Load first question when page loads
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        // Shuffle questions on page load
-        shuffle(questions);
-
-        // loadQuestion();
-    </script>
-    <audio id="chooseSound" src="soundEffect/ChooseSound.mp3"></audio>
-    <audio id="correctSound" src="soundEffect/CorrectSound.mp3"></audio>
-    <audio id="failSound" src="soundEffect/FailSound.mp3"></audio>
+    }
+    // Initialize
+    updateStartButton();
+</script>
+<audio id="chooseSound" src="soundEffect/ChooseSound.mp3"></audio>
+<audio id="correctSound" src="soundEffect/CorrectSound.mp3"></audio>
+<audio id="failSound" src="soundEffect/FailSound.mp3"></audio>
 </body>
 </html>

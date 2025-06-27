@@ -1,5 +1,6 @@
-const questions = [
+questions = [
     {
+        "id": 1,
         "question": "Kháng Sinh khả dụng đạt cao nhất khi dùng thuốc qua đường…:",
         "A": "Xông khí dung mũi",
         "B": "Đặt dưới lưỡi",
@@ -8,6 +9,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 2,
         "question": "Chất ức chế men CYP450 nào có tác dụng trong điều trị lao?",
         "A": "Metronidazol",
         "B": "Cimetidin",
@@ -16,6 +18,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 3,
         "question": "Yếu tố bệnh nhân ảnh hưởng đến tác dụng của thuốc là:",
         "A": "Thói quen",
         "B": "Công việc",
@@ -24,6 +27,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 4,
         "question": "Khi sử dụng thuốc trên phụ nữ có thai cần lưu ý nhất thời điểm?",
         "A": "3 tháng đầu",
         "B": "3 tháng giữa",
@@ -32,6 +36,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 5,
         "question": "Một phân tử thuốc có thể vượt qua màng tế bào khi…:",
         "A": "Tan được trong nước",
         "B": "Tan được trong lipid",
@@ -40,6 +45,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 6,
         "question": "Thuốc nào sau đây khi dùng cho trẻ em có thể gây “hội chứng xám ở trẻ”?",
         "A": "Codein",
         "B": "Aspirin",
@@ -48,6 +54,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 7,
         "question": "Nguyên nhân vì sao nồng độ thuốc dạng tự do ở trẻ em cao hơn người lớn?",
         "A": "Lượng nước trong cơ thể và dịch ngoại bào trẻ em cao",
         "B": "Nồng độ albumin và acid béo tự do trong máu trẻ em nhiều",
@@ -56,6 +63,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 8,
         "question": "Tác dụng xảy ra trước khi thuốc hấp thu được gọi là?",
         "A": "Tác dụng chính",
         "B": "Tác dụng phụ",
@@ -64,6 +72,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 9,
         "question": "Chọn một tác dụng không hồi phục?",
         "A": "Tetracyclin tạo chelat bền vững với Ca++",
         "B": "Tác dụng gây tê của procain",
@@ -72,6 +81,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 10,
         "question": "Chọn một ví dụ về tác dụng đặc hiệu của thuốc?",
         "A": "Cephaclosporin diệt trực khuẩn mủ xanh",
         "B": "Adrenalin gây cường giao cảm",
@@ -80,6 +90,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 11,
         "question": "Tác dụng chọn lọc của thuốc trên một tác nhân gây bệnh là:",
         "A": "Tác dụng toàn thân",
         "B": "Tác dụng đặc hiệu",
@@ -88,6 +99,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 12,
         "question": "Khi sử dụng các thuốc bôi ngoài da trên vùng da bị tổn thương rộng có thể gây ra những tác dụng gì?",
         "A": "Tác dụng tại chỗ và toàn than",
         "B": "Tác dụng chính và phụ",
@@ -96,6 +108,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 13,
         "question": "Chọn nhận định đúng về thuốc gây mê ketamin?",
         "A": "Sử dụng bằng đường hô hấp",
         "B": "Có thể gây các rối loạn tâm thần, ảo giác",
@@ -104,6 +117,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 14,
         "question": "Thuốc an thần gây ngủ ít gây lệ thuộc thuốc?",
         "A": "Zolpidem",
         "B": "Lorazepam",
@@ -112,6 +126,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 15,
         "question": "Thuốc ức chế trung tâm ho, không giảm đau, không gây nghiện, không gây ngủ, dùng điều trị ho do nghiễm khuẩn, kích ứng là?",
         "A": "Dextromethorphan",
         "B": "Tramadol",
@@ -120,6 +135,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 16,
         "question": "Một trong những mục đích của phối hợp thuốc nhằm…:",
         "A": "Tăng tác dụng chính",
         "B": "Giảm tác dụng không mong muốn",
@@ -128,6 +144,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 17,
         "question": "Để tránh hiện tượng quen thuốc:",
         "A": "Thường dùng thuốc ngắt quãng hoặc luân phiên thay đổi các nhóm thuốc",
         "B": "Ngưng dùng khi có hiện tượng quen thuốc",
@@ -136,6 +153,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 18,
         "question": "Thành phần đại phân tử của receptor là:",
         "A": "Protein",
         "B": "Lipid",
@@ -144,6 +162,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 19,
         "question": "Một bệnh nhân hen suyễn có thể sử dụng thuốc nào để giãn phế quản?",
         "A": "Propranolol",
         "B": "Salbutamol",
@@ -152,6 +171,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 20,
         "question": "Trong quá trình sử dụng thuốc mê nào sau đây gây ảo giác ác mộng?",
         "A": "Thiopental",
         "B": "Halothan",
@@ -160,6 +180,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 21,
         "question": "Chọn đáp án đúng gồm các chất trung gian hóa học có cấu trúc không peptid?",
         "A": "Dopamin, acetylcholin, Chất P",
         "B": "Serotonin, acid aspartic, norarenalin",
@@ -168,6 +189,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 22,
         "question": "Chọn đáp án không đúng về đặc điểm các thuốc chống động kinh?",
         "A": "Thuốc loại trừ hoặc làm giảm tần số của cơn động kinh",
         "B": "Thuốc loại trừ hoặc làm giảm mức độ trầm trọng của cơn động kinh",
@@ -176,6 +198,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 23,
         "question": "Chọn đáp án không đúng về đặc điểm của thuốc an thần gây ngủ?",
         "A": "Liều thấp, thuốc có tác dụng an thần",
         "B": "Liều trung bình gây ngủ",
@@ -184,6 +207,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 24,
         "question": "Trong cai nghiện morphine, thuốc nào đang được ưu tiên sử dụng?",
         "A": "Clonidin",
         "B": "Naloxon",
@@ -192,6 +216,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 25,
         "question": "Kể tên 4 quá trình xảy ra khi thuốc vào cơ thể theo đúng trình tự:",
         "A": "Hấp thu, Chuyển hóa, Phân phối, Thải trừ",
         "B": "Phân phối, Hấp thu, Chuyển hóa, Thải trừ",
@@ -200,6 +225,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 26,
         "question": "Trong quá trình chuyển hóa ở gan, glycosid bị:",
         "A": "Cắt ra 2 phần: genin và đường",
         "B": "Phá hủy hoàn toàn phần genin",
@@ -208,6 +234,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 27,
         "question": "Phối hợp quinidin với digoxin sẽ đưa đến tăng tác dụng và độc tính của digoxin do:",
         "A": "Làm giảm hấp thu digoxin ở ruột",
         "B": "Ức chế chuyển hóa digoxin",
@@ -216,6 +243,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 28,
         "question": "Cơ chế tác dụng điều trị suy tim quan trọng của digoxin là:",
         "A": "Tăng dẫn truyền nhĩ thất",
         "B": "Làm tăng nồng độ Ca2+ trong tế bào nên làm tăng sự co bóp của cơ tim",
@@ -224,6 +252,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 29,
         "question": "Cách dùng digoxin đúng:",
         "A": "Ngừng digoxin nếu muốn thay thế bằng thuốc khác",
         "B": "Nên dùng bắt đầu từ liều nhỏ theo đường uống",
@@ -232,6 +261,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 30,
         "question": "Chọn thuốc ngoài chống loạn nhịp còn có tác dụng gây tê:",
         "A": "Amiodaron",
         "B": "Bisoprolon",
@@ -240,6 +270,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 31,
         "question": "Chọn thuốc ngoài chống loạn nhịp còn có tác dụng chống động kinh:",
         "A": "Amiodaron",
         "B": "Bisoprolon",
@@ -248,6 +279,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 32,
         "question": "Dopegyt, Aldomet là tên biệt dược của thuốc:",
         "A": "Methyldopa",
         "B": "Atenolol",
@@ -256,6 +288,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 33,
         "question": "Chọn thuốc trị tăng huyết áp nhóm ức chế men chuyển:",
         "A": "Methyldopa",
         "B": "Propranolol",
@@ -264,6 +297,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 34,
         "question": "Chọn thuốc trị tăng huyết áp nhóm ức chế kênh Ca2+:",
         "A": "Methyldopa",
         "B": "Propranolol",
@@ -272,6 +306,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 35,
         "question": "Adalat là tên biệt dược của:",
         "A": "Captopril",
         "B": "Propranolol",
@@ -280,6 +315,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 36,
         "question": "Chọn thuốc trị tăng huyết áp gây tác dụng phụ ho khan và suy thận cấp:",
         "A": "Captopril",
         "B": "Propranolol",
@@ -288,6 +324,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 37,
         "question": "Chọn thuốc lợi tiểu có tác dụng hạ nhãn áp mạnh nhất:",
         "A": "Spironolacton",
         "B": "Furocemid",
@@ -296,6 +333,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 38,
         "question": "Chọn thuốc lợi tiểu có vị trí tác dụng ở quai henle:",
         "A": "Spironolacton",
         "B": "Furocemid",
@@ -304,6 +342,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 39,
         "question": "Chọn thuốc lợi tiểu thuộc nhóm có tác dụng thẩm thấu:",
         "A": "Spironolacton",
         "B": "Mannitol",
@@ -312,6 +351,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 40,
         "question": "Cimetidin là thuốc trị viêm loét dạ dày tá tràng nhóm:",
         "A": "Kháng acid",
         "B": "Kháng receptop H2 –histamin",
@@ -320,6 +360,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 41,
         "question": "Chất kháng H2 mạnh nhất và ít gây tương tác thuốc:",
         "A": "Ranitidin",
         "B": "Cimetidin",
@@ -328,6 +369,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 42,
         "question": "Cơ chế tác dụng của omeprazol là:",
         "A": "Kháng H2 –histamin",
         "B": "Kháng acid dịch vị",
@@ -336,6 +378,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 43,
         "question": "Omeprazol thải trừ chủ yếu qua:",
         "A": "Đường tiêu hóa",
         "B": "Đường hô hấp",
@@ -344,6 +387,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 44,
         "question": "Thường gặp tác dụng phụ nào khi sử dụng lâu dài antacid nhôm:",
         "A": "Đau bụng",
         "B": "Táo bón",
@@ -352,6 +396,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 45,
         "question": "Mục đích dùng antacid là đưa pH của dạ dày về mức:",
         "A": "Khoảng 3",
         "B": "Khoảng 4",
@@ -360,6 +405,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 46,
         "question": "Trong biệt dược Klamentin, amoxicillin kết hợp với acid clavulanic theo tỉ lệ:",
         "A": "1: 2",
         "B": "1: 3",
@@ -368,6 +414,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 47,
         "question": "Cloramphenicol được chỉ định chủ yếu trong bệnh:",
         "A": "Vàng da",
         "B": "Sốt thấp khớp",
@@ -376,6 +423,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 48,
         "question": "Cơ chế tác dụng của cloramphenicol là:",
         "A": "Ức chế tổng hợp thành tế bào vi khuẩn",
         "B": "Ức chế tổng hợp protein của vi khuẩn do gắn vào 30S của ribosom",
@@ -384,6 +432,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 49,
         "question": "Tác dụng phụ đặc biệt nguy hiểm của cloramphenicol là:",
         "A": "Thiếu máu bất sản",
         "B": "Viêm da",
@@ -392,6 +441,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 50,
         "question": "“Hội chứng xám trẻ sơ sinh” là tác dụng phụ hay gặp khi dùng:",
         "A": "Tetracyclin",
         "B": "Metronidazol",
@@ -400,6 +450,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 51,
         "question": "Doxycyclin đặc biệt dùng trong điều trị:",
         "A": "Dịch tả",
         "B": "Lỵ amibe",
@@ -408,6 +459,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 52,
         "question": "Thuốc nào sau đây gây điếc có hồi phục?",
         "A": "Clindamycin",
         "B": "Amoxicillin",
@@ -416,6 +468,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 53,
         "question": "Thuốc nào sau đây dùng an toàn nhất trong khoa nhi?",
         "A": "Erythromycin",
         "B": "Lincomycin",
@@ -424,6 +477,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 54,
         "question": "Một đặc điểm khi dùng gentamicin là:",
         "A": "Chỉ dùng đường uống",
         "B": "Chỉ dùng đường tiêm",
@@ -432,6 +486,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 55,
         "question": "Kháng sinh nào thuộc họ Quinolon?",
         "A": "Cloramphenicol",
         "B": "Pefloxacin",
@@ -440,6 +495,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 56,
         "question": "Kháng sinh nào thuộc họ Macrolid?",
         "A": "Cloramphenicol",
         "B": "Pefloxacin",
@@ -448,6 +504,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 57,
         "question": "Chọn kháng sinh gây tác dụng phụ viêm ruột kết màng giả:",
         "A": "Cloramphenicol",
         "B": "Pefloxacin",
@@ -456,6 +513,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 58,
         "question": "Thuốc có tác dụng tống đàm ra khỏi đường hô hấp tốt nhất:",
         "A": "Terpin codein",
         "B": "Dextromethorphan",
@@ -464,6 +522,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 59,
         "question": "Nguyên nhân chính phải phối hợp thuốc trong điều trị bệnh lao là:",
         "A": "Giảm độc tính",
         "B": "Làm chậm kháng thuốc",
@@ -472,6 +531,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 60,
         "question": "Tác dụng phụ thường gặp của izoniazid trên hệ thần kinh là:",
         "A": "Rối loạn hệ thần kinh thực vật",
         "B": "Độc với dây thần kinh số VIII",
@@ -480,6 +540,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 61,
         "question": "Một đặc điểm trong cơ chế tác dụng của izoniazid là:",
         "A": "Ức chế tổng hợp acid folic",
         "B": "Ức chế tổng hợp RNA của tế bào vi khuẩn",
@@ -488,6 +549,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 62,
         "question": "Tác dụng phụ gây đe dọa tính mạng khi sử dụng izoniazid là:",
         "A": "Suy tim sung huyết",
         "B": "Tắc nghẽn phổi mãn tính",
@@ -496,6 +558,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 63,
         "question": "Tên vi khuẩn gây bệnh lao:",
         "A": "Mycobacterium tuberculosis",
         "B": "Mycobacterium bovis",
@@ -504,6 +567,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 64,
         "question": "Dấu hiệu lâm sàng đặc biệt khi dùng rifampicin trong điều trị lao là:",
         "A": "Bệnh nhân bị ho khan kéo dài",
         "B": "Chảy máu đường tiêu hóa",
@@ -512,6 +576,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 65,
         "question": "Chọn thuốc điều trị sốt rét có thành phần phối hợp giữa pyrimethamin với sulfadoxin:",
         "A": "Artesunat",
         "B": "Quinin",
@@ -520,6 +585,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 66,
         "question": "Flagyl, Klion là tên biệt dược của thuốc:",
         "A": "Secnidazol",
         "B": "Tinidazol",
@@ -528,6 +594,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 67,
         "question": "Flagentyl là tên biệt dược của thuốc:",
         "A": "Secnidazol",
         "B": "Tinidazol",
@@ -536,6 +603,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 68,
         "question": "Chọn thuốc tẩy giun có cơ chế làm liệt cơ giun:",
         "A": "Mebendazol",
         "B": "Pyrantel",
@@ -544,6 +612,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 69,
         "question": "Cơ chế chung của các thuốc hạ sốt, kháng viêm, giảm đau là:",
         "A": "Ngăn cản tổng hợp thromboxan",
         "B": "Ngăn cản tổng hợp prostaglandin",
@@ -552,6 +621,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 70,
         "question": "Cơ chế giảm đau của NSAIDs chủ yếu là do ức chế chất nào sau đây?",
         "A": "Prostaglandin synthetase",
         "B": "Cyclooxygenase",
@@ -560,6 +630,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 71,
         "question": "Cơ chế chống kết tập tiểu cầu của Aspirin là do ức chế chất nào sau đây",
         "A": "Prostaglandin synthetase",
         "B": "Cyclooxygenase",
@@ -568,6 +639,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 72,
         "question": "Aspirin dễ gây ra tác dụng phụ nào sau đây?",
         "A": "Rối loạn tiêu hóa",
         "B": "Rối loạn thần kinh",
@@ -576,6 +648,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 73,
         "question": "Chống chỉ định dùng aspirin trong:",
         "A": "Sốt do viêm",
         "B": "Sốt xuất huyết",
@@ -584,6 +657,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 74,
         "question": "Chọn nguyên nhân cơ bản dẫn đến tử vong khi sử dụng quá liều paracetamol:",
         "A": "Shock phản vệ",
         "B": "Suy hô hấp",
@@ -592,6 +666,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 75,
         "question": "Thuốc có tác dụng kháng viêm mạnh nhất là:",
         "A": "Dexamethason",
         "B": "Hydrocortison",
@@ -600,6 +675,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 76,
         "question": "Sử dụng các corticoid lâu dài có thể gây:",
         "A": "Hội chứng xám trẻ sơ sinh",
         "B": "Hội chứng trào ngược dạ dày – thực quản",
@@ -608,6 +684,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 77,
         "question": "Cách dùng glucocorticoid điều trị viêm khớp dạng thấp là:",
         "A": "Bắt đầu từ liều lớn để kiểm soát bệnh",
         "B": "Bắt đầu từ liều nhỏ rồi tăng liều lên",
@@ -616,14 +693,16 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 78,
         "question": "Chọn glucocorticoid thiên nhiên:",
         "A": "Hydrocortison",
         "B": "Dexamethason",
-        "C": "Betamethason",
-        "D": "Prednisolon",
+        "C": "Prednison",
+        "D": "Cortison",
         "answer": "A"
     },
     {
+        "id": 79,
         "question": "Phát biểu nào sau đây về tác dụng của các glucocorticoid là đúng?",
         "A": "Làm vết thương nhanh liền sẹo",
         "B": "Ức chế sự phát triển của vi khuẩn",
@@ -632,6 +711,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 80,
         "question": "Glucocorticoid nào sau đây có tác dụng kéo dài nhất?",
         "A": "Hydrocortison",
         "B": "Betamethason",
@@ -640,6 +720,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 81,
         "question": "Glucocorticoid nào sau đây có tác dụng ngắn nhất?",
         "A": "Hydrocortison",
         "B": "Betamethason",
@@ -648,6 +729,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 82,
         "question": "Khi sử dụng các corticoid lâu dài mỡ sẽ tập trung nhiều ở:",
         "A": "Mặt",
         "B": "Bàn chân",
@@ -656,6 +738,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 83,
         "question": "Đường dùng sai khi dùng insulin:",
         "A": "Tiêm dưới da",
         "B": "Tiêm bắp",
@@ -664,6 +747,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 84,
         "question": "Pyridoxin là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin C",
@@ -672,6 +756,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 85,
         "question": "Các triệu chứng: khô mắt, khô da, quáng gà là dấu hiệu thiếu vitamin nào sau đây?",
         "A": "D",
         "B": "A",
@@ -680,6 +765,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 86,
         "question": "Trong các loại rau quả vitamin A tồn tại dưới dạng:",
         "A": "Acid mật",
         "B": "Caroten",
@@ -688,6 +774,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 87,
         "question": "Vitamin E thải trừ chủ yếu qua:",
         "A": "Nước tiểu",
         "B": "Mật",
@@ -696,6 +783,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 88,
         "question": "Vitamin B1 có nhiều nhất trong:",
         "A": "Thịt bò",
         "B": "Rau xanh",
@@ -704,6 +792,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 89,
         "question": "Tai biến nguy hiểm nhất khi dùng vitamin B1 là:",
         "A": "Loét đường tiêu hóa",
         "B": "Shock khi tiêm tĩnh mạch",
@@ -712,6 +801,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 90,
         "question": "Chất nào sau đây có tác dụng ngược với vitamin K?",
         "A": "Coumarin",
         "B": "Prothrombinase",
@@ -720,6 +810,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 91,
         "question": "Retinol là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin C",
@@ -728,6 +819,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 92,
         "question": "Thiamin là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin C",
@@ -736,6 +828,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 93,
         "question": "Acid ascorbic là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin C",
@@ -744,6 +837,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 94,
         "question": "Cianocobalamin là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin C",
@@ -752,6 +846,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 95,
         "question": "Tocoferol là tên khác của:",
         "A": "Vitamin E",
         "B": "Vitamin C",
@@ -760,6 +855,7 @@ const questions = [
         "answer": "A"
     },
     {
+        "id": 96,
         "question": "Calciferol là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin D",
@@ -768,6 +864,7 @@ const questions = [
         "answer": "B"
     },
     {
+        "id": 97,
         "question": "Acid folic là tên khác của:",
         "A": "Vitamin A",
         "B": "Vitamin E",
@@ -776,6 +873,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 98,
         "question": "Riboflavin là tên khác của:",
         "A": "Vitamin D",
         "B": "Vitamin E",
@@ -784,6 +882,7 @@ const questions = [
         "answer": "C"
     },
     {
+        "id": 99,
         "question": "Chọn thuốc kháng histamin thế hệ 1:",
         "A": "Acryvastin",
         "B": "Cetirizin",
@@ -792,6 +891,7 @@ const questions = [
         "answer": "D"
     },
     {
+        "id": 100,
         "question": "Chọn thuốc kháng histamin thế hệ 1:",
         "A": "Astemizol",
         "B": "Cetirizin",

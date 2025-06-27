@@ -100,7 +100,7 @@ app.use((req, res, next) => {
 // app.get('/kiem-soat-nhiem-khuan', (req, res) => {
 //     console.log('kiem-soat-nhiem-khuan route accessed');
 //     const filePath = path.join(__dirname, 'kiemSoatNhiemKhuan.html');
-//     res.sendFile(filePath, (err) => {
+//     res.sendFile(filePath, (err) => {erb
 //         if (err) {
 //             console.log('Error serving root file:', err);
 //             res.status(500).send('Error loading page');

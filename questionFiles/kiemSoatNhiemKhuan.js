@@ -1,4 +1,4 @@
-const questions = [
+ questions = [
     {
         "id": 1,
         "question": "Thời gian NKBV thường xuất hiện sau khi người bệnh nhập viện là:",

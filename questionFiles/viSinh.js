@@ -1,4 +1,4 @@
-const questions = [
+ questions = [
     {
         "id": 1,
         "question": "Trứng Ascaris lumbricoides khi ra khỏi cơ thể người:",

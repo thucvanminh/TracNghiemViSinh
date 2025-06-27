@@ -1,4 +1,4 @@
-const questions = [
+questions = [
     {
         "id": 1,
         "question": "Lipid là những hợp chất có chứa các nguyên tố chính nào sau đây?",
